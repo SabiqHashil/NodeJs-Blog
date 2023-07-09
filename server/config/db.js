@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
-    mongoose.set("strictQuery", false);
+    mongoose.set("strictQuery", {
+      bufferCommands: false,
+      bufferTimeoutMS: 5000,
+    });
     const conn = await mongoose.connect(process.env.MONGODB_URI);
+
     console.log(`Database Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);

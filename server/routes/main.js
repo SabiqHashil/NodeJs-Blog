@@ -88,12 +88,12 @@ router.post("/search", async (req, res) => {
       $or: [
         {
           title: {
-            $regex: new RedExp(searchNoSpecialChar, "i"),
+            $regex: new RegExp(searchNoSpecialChar, "i"),
           },
         },
         {
           body: {
-            $regex: new RedExp(searchNoSpecialChar, "i"),
+            $regex: new RegExp(searchNoSpecialChar, "i"),
           },
         },
       ],
