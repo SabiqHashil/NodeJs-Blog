@@ -35,8 +35,24 @@ router.post("/admin", async (req, res) => {
     } else {
       res.send("Wrong username or password");
     }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-   
+/**
+ * POST /
+ * Admin - Register
+ */
+router.post("/register", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    if (req.body.username === "admin" && req.body.password === "password") {
+      res.send("You are logged in.");
+    } else {
+      res.send("Wrong username or password");
+    }
   } catch (error) {
     console.log(error);
   }
