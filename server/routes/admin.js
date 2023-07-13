@@ -90,9 +90,9 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
       data,
       layout: adminLayout,
     });
-  } catch (error) {}
-
-  console.log(error);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 /**
@@ -112,9 +112,9 @@ router.get("/add-post", authMiddleware, async (req, res) => {
       locals,
       layout: adminLayout,
     });
-  } catch (error) {}
-
-  console.log(error);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // router.post("/admin", async (req, res) => {
