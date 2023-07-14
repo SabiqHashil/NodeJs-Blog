@@ -10,15 +10,15 @@ const jwtSecret = process.env.JWT_SECRET;
 
 /**
  *
- * Chech Login
+ * Check Login
  */
-
 const authMiddleware = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
   try {
     const decoded = jwt.verify(token, jwtSecret);
     req.userId = decoded.userId;
@@ -36,7 +36,7 @@ router.get("/admin", async (req, res) => {
   try {
     const locals = {
       title: "Admin",
-      description: "Simple Blog created with NodeJs, Express & MongoDb ",
+      description: "Simple Blog created with NodeJs, Express & MongoDb.",
     };
 
     res.render("admin/index", { locals, layout: adminLayout });
@@ -52,6 +52,7 @@ router.get("/admin", async (req, res) => {
 router.post("/admin", async (req, res) => {
   try {
     const { username, password } = req.body;
+
     const user = await User.findOne({ username });
 
     if (!user) {
@@ -76,12 +77,11 @@ router.post("/admin", async (req, res) => {
  * GET /
  * Admin Dashboard
  */
-
 router.get("/dashboard", authMiddleware, async (req, res) => {
   try {
     const locals = {
       title: "Dashboard",
-      description: "Simple Blog created with NodeJs, Express & MongoDb",
+      description: "Simple Blog created with NodeJs, Express & MongoDb.",
     };
 
     const data = await Post.find();
@@ -99,12 +99,11 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
  * GET /
  * Admin - Create New Post
  */
-
 router.get("/add-post", authMiddleware, async (req, res) => {
   try {
     const locals = {
       title: "Add Post",
-      description: "Simple Blog created with NodeJs, Express & MongoDb",
+      description: "Simple Blog created with NodeJs, Express & MongoDb.",
     };
 
     const data = await Post.find();
@@ -121,7 +120,6 @@ router.get("/add-post", authMiddleware, async (req, res) => {
  * POST /
  * Admin - Create New Post
  */
-
 router.post("/add-post", authMiddleware, async (req, res) => {
   try {
     try {
@@ -144,12 +142,11 @@ router.post("/add-post", authMiddleware, async (req, res) => {
  * GET /
  * Admin - Create New Post
  */
-
 router.get("/edit-post/:id", authMiddleware, async (req, res) => {
   try {
     const locals = {
-      title: "Add Post",
-      description: "Simple Blog created with NodeJs, Express & MongoDb",
+      title: "Edit Post",
+      description: "Free NodeJs User Management System",
     };
 
     const data = await Post.findOne({ _id: req.params.id });
@@ -168,11 +165,10 @@ router.get("/edit-post/:id", authMiddleware, async (req, res) => {
  * PUT /
  * Admin - Create New Post
  */
-
 router.put("/edit-post/:id", authMiddleware, async (req, res) => {
   try {
     await Post.findByIdAndUpdate(req.params.id, {
-      title: req.body.body,
+      title: req.body.title,
       body: req.body.body,
       updatedAt: Date.now(),
     });
@@ -183,15 +179,16 @@ router.put("/edit-post/:id", authMiddleware, async (req, res) => {
   }
 });
 
-// router.post("/admin", async (req, res) => {
+// router.post('/admin', async (req, res) => {
 //   try {
 //     const { username, password } = req.body;
 
-//     if (req.body.username === "admin" && req.body.password === "password") {
-//       res.send("You are logged in.");
+//     if(req.body.username === 'admin' && req.body.password === 'password') {
+//       res.send('You are logged in.')
 //     } else {
-//       res.send("Wrong username or password");
+//       res.send('Wrong username or password');
 //     }
+
 //   } catch (error) {
 //     console.log(error);
 //   }
@@ -211,7 +208,7 @@ router.post("/register", async (req, res) => {
       res.status(201).json({ message: "User Created", user });
     } catch (error) {
       if (error.code === 11000) {
-        res.status(409).json({ message: "User already in use." });
+        res.status(409).json({ message: "User already in use" });
       }
       res.status(500).json({ message: "Internal server error" });
     }
@@ -224,7 +221,6 @@ router.post("/register", async (req, res) => {
  * DELETE /
  * Admin - Delete Post
  */
-
 router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
   try {
     await Post.deleteOne({ _id: req.params.id });
@@ -240,7 +236,7 @@ router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
  */
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
-  // res.json({ message: "Logout successful." });
+  //res.json({ message: 'Logout successful.'});
   res.redirect("/");
 });
 
